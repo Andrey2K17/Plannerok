@@ -1,7 +1,13 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
+
+apply from: '../dependencies.gradle'
 
 android {
     namespace 'com.pg13.plannerok'
@@ -23,6 +29,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -33,11 +44,26 @@ android {
 }
 
 dependencies {
+    implementation androidX.activity
+    implementation androidX.fragment
+    //AndroidX
+    implementation androidX.core
+    implementation androidX.appCompat
+    implementation androidX.material
+    implementation androidX.constraintlayout
+    implementation androidX.recyclerview
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //Hilt
+    implementation hilt.core
+    kapt hilt.androidCompiler
+    kapt hilt.compiler
+
+    //Navigation
+    implementation navigation.fragment
+    implementation navigation.ui
+
+    //Load Image from Internet
+    implementation coil
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
