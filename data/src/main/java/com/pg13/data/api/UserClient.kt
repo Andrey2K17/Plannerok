@@ -4,11 +4,11 @@ import com.pg13.data.entities.remote.CheckAuthCodeBody
 import com.pg13.data.entities.remote.CheckAuthCodeRemote
 import com.pg13.data.entities.remote.IsSuccessRemote
 import com.pg13.data.entities.remote.PhoneBody
+import com.pg13.data.entities.remote.RefreshTokenBody
+import com.pg13.data.entities.remote.RegisterDataBody
 import com.pg13.data.entities.remote.RegisterDataRemote
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface UserClient {
@@ -23,11 +23,13 @@ interface UserClient {
         @Body body: CheckAuthCodeBody
     ): Response<CheckAuthCodeRemote>
 
-    @FormUrlEncoded
-    @POST("/api/v1/users/register")
+    @POST("/api/v1/users/register/")
     suspend fun register(
-        @Field("phone") phone: String,
-        @Field("name") name: String,
-        @Field("username") userName: String
+        @Body body: RegisterDataBody
+    ): Response<RegisterDataRemote>
+
+    @POST("/api/v1/users/refresh-token/")
+    suspend fun refreshToken(
+        @Body body: RefreshTokenBody
     ): Response<RegisterDataRemote>
 }

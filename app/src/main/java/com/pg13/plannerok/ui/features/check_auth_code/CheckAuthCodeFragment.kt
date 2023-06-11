@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.fraggjkee.smsconfirmationview.SmsConfirmationView
+import com.pg13.domain.entities.AuthDataDomain
 import com.pg13.domain.entities.Resource
 import com.pg13.plannerok.R
 import com.pg13.plannerok.databinding.FragmentCheckAuthCodeBinding
@@ -21,7 +22,6 @@ class CheckAuthCodeFragment : ViewBindingFragment<FragmentCheckAuthCodeBinding>(
     private val viewModel: SignInViewModel by activityViewModels {
         defaultViewModelProviderFactory
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +45,16 @@ class CheckAuthCodeFragment : ViewBindingFragment<FragmentCheckAuthCodeBinding>(
                         }
 
                         is Resource.Success -> {
-                            findNavController().navigate(CheckAuthCodeFragmentDirections.actionCheckAuthCodeFragmentToRegisterFragment())
+                            if (resource.data.isUserExists) {
+                                viewModel.setAuthData(AuthDataDomain(resource.data.refreshToken, resource.data.accessToken))
+                                findNavController().navigate(CheckAuthCodeFragmentDirections.actionCheckAuthCodeFragmentToProfileFragment())
+                            } else {
+                                findNavController().navigate(
+                                    CheckAuthCodeFragmentDirections.actionCheckAuthCodeFragmentToRegisterFragment(
+                                        viewModel.phone.value
+                                    )
+                                )
+                            }
                         }
                     }
                 }

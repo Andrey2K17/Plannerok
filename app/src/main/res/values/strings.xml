@@ -3,4 +3,9 @@
 
     <string name="send">Отправить</string>
     <string name="defaults_action_button">Кнопка действия</string>
+    <string name="name">Имя пользователя</string>
+    <string name="user_name">username пользователя</string>
+
+    <string name="required">Обязательное поле</string>
+    <string name="field_special_character">Поле не должно содержать специальные символы, пробелы</string>
 </resources>

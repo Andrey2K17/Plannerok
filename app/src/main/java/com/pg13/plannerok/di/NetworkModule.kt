@@ -1,7 +1,10 @@
 package com.pg13.plannerok.di
 
 import com.google.gson.GsonBuilder
+import com.pg13.data.api.UserClient
 import com.pg13.plannerok.BuildConfig
+import com.pg13.plannerok.network.AuthAuthenticator
+import com.pg13.plannerok.network.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +19,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
+    @Singleton
+    @Provides
+    fun provideClient(retrofit: Retrofit): UserClient {
+        return retrofit.create(UserClient::class.java)
+    }
 
     private fun configureOkHttpClientBuilder(
         builder: OkHttpClient.Builder
@@ -26,8 +34,13 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideOkHttpClientBuilder(): OkHttpClient.Builder {
+    fun provideOkHttpClientBuilder(
+        authInterceptor: AuthInterceptor,
+        authAuthenticator: AuthAuthenticator
+    ): OkHttpClient.Builder {
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .authenticator(authAuthenticator)
             .also { configureOkHttpClientBuilder(it) }
     }
 

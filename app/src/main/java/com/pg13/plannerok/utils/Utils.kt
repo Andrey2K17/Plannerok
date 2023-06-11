@@ -18,3 +18,5 @@ inline fun LifecycleOwner.launchOnLifecycle(
         }
     }
 }
+
+fun String.userNameValidation(): Boolean = matches("^[0-9а-яА-Я-a-zA-Z-_]*$".toRegex())

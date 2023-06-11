@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val userUseCase: RegisterUseCase
+    private val registerUseCase: RegisterUseCase
 ) : ViewModel() {
 
     val phone = MutableStateFlow("")
@@ -21,11 +21,11 @@ class RegisterViewModel @Inject constructor(
 
 
     private val sendButtonPressedEvent = MutableSharedFlow<Triple<String, String, String>>()
-    val confirmationCodeSentEvent = sendButtonPressedEvent.flatMapLatest { triple ->
-        userUseCase.invoke(triple.first, triple.second, triple.third)
+    val registerEvent = sendButtonPressedEvent.flatMapLatest { triple ->
+        registerUseCase.invoke(triple.first, triple.second, triple.third)
     }
 
-    fun sendAuthCode() {
+    fun register() {
         viewModelScope.launch {
             sendButtonPressedEvent.emit(Triple(phone.value, name.value, userName.value))
         }

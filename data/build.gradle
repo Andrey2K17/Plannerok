@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 apply from: '../dependencies.gradle'
@@ -46,12 +47,14 @@ dependencies {
     // Coroutines, flows, liveData
     implementation kotlinx.serialization
     implementation kotlinx.coroutines
+    implementation kotlinx.collections
 
     //room
-
     api room.core
     api room.ktx
     kapt room.compiler
+
+    implementation dataStore
 
     implementation project(path: ':domain')
     testImplementation 'junit:junit:4.13.2'

@@ -5,6 +5,7 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-parcelize'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 apply from: '../dependencies.gradle'
@@ -76,6 +77,8 @@ dependencies {
     implementation countryCodePicker
 
     implementation smsConfirmationView
+
+    implementation dataStore
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
