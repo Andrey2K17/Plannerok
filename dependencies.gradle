@@ -51,4 +51,8 @@ ext {
 
     //Load Image from Internet
     coil = "io.coil-kt:coil:2.4.0"
+
+    countryCodePicker = 'com.hbb20:ccp:2.7.2'
+
+    smsConfirmationView = "com.github.fraggjkee:sms-confirmation-view:1.7.1"
 }

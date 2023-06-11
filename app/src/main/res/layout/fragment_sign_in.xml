@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:ccpDialog_backgroundColor="@color/white"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_autoDetectLanguage="true"
+            app:ccp_countryPreference="RU"
+            app:ccp_defaultLanguage="RUSSIAN"
+            app:ccp_hintExampleNumber="true"
+            app:ccp_hintExampleNumberType="FIXED_LINE"
+            app:ccp_showNameCode="false"
+            app:layout_constraintBottom_toTopOf="@id/send_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editText_carrierNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/padding_8dp"
+            android:inputType="phone"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/send_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/ccp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.pg13.plannerok.views.ProgressButton
+            android:id="@+id/send_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:textRes="@{@string/send}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

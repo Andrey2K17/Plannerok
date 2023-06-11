@@ -27,7 +27,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", '"https://plannerok.ru"'
         }
+        debug {
+            buildConfigField "String", "BASE_URL", '"https://plannerok.ru"'
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     dataBinding {
@@ -44,12 +52,12 @@ android {
 }
 
 dependencies {
-    implementation androidX.activity
-    implementation androidX.fragment
+    implementation 'androidx.activity:activity-ktx:1.7.2'
+    implementation 'androidx.fragment:fragment-ktx:1.6.0'
     //AndroidX
-    implementation androidX.core
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation androidX.appCompat
-    implementation androidX.material
+    implementation 'com.google.android.material:material:1.9.0'
     implementation androidX.constraintlayout
     implementation androidX.recyclerview
 
@@ -64,6 +72,10 @@ dependencies {
 
     //Load Image from Internet
     implementation coil
+
+    implementation countryCodePicker
+
+    implementation smsConfirmationView
 
     implementation project(path: ':domain')
     implementation project(path: ':data')
