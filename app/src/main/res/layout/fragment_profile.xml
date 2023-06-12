@@ -20,5 +20,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.pg13.plannerok.views.ProgressButton
+            android:id="@+id/send_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:textRes="@{@string/send}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

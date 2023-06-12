@@ -1,10 +1,10 @@
 package com.pg13.plannerok.network
 
-import android.util.Log
+import com.pg13.data.api.UserClient
+import com.pg13.data.entities.remote.RefreshTokenBody
 import com.pg13.domain.entities.AuthDataDomain
-import com.pg13.domain.entities.Resource
 import com.pg13.domain.usecases.PrefDataSourceUseCase
-import com.pg13.domain.usecases.RefreshTokenUseCase
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -16,49 +16,27 @@ import javax.inject.Provider
 
 class AuthAuthenticator @Inject constructor(
     private val prefDataSourceUseCase: PrefDataSourceUseCase,
-    private val refreshTokenUseCase: Provider<RefreshTokenUseCase>
+    private val userClient: Provider<UserClient>
 ) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
-        Log.d("test123", "AuthAuthenticator")
-        var refreshToken = ""
-        var accessToken = ""
-        runBlocking {
-            prefDataSourceUseCase.getAuthData().collect {
-                refreshToken = it.refreshToken ?: ""
-            }
+
+        var authData = runBlocking {
+            prefDataSourceUseCase.getAuthData().first()
         }
 
-        return runBlocking {
-            refreshTokenUseCase.get().invoke(refreshToken).collect { resource ->
-                when (resource) {
-                    is Resource.Error -> {
-                        Log.d("test123", "error")
-                    }
+         return runBlocking {
+            val newAccessToken = userClient.get().refreshToken(RefreshTokenBody(authData.refreshToken!!))
 
-                    is Resource.Loading -> {
-                        Log.d("test123", "loading")
-                    }
+             if (!newAccessToken.isSuccessful || newAccessToken.body() == null) {
+                 prefDataSourceUseCase.setAuthData(AuthDataDomain("", ""))
+             }
 
-                    is Resource.Success -> {
-                        Log.d("test123", "success: ${resource.data}")
-                        prefDataSourceUseCase.setAuthData(
-                            AuthDataDomain(
-                                resource.data.refreshToken,
-                                resource.data.accessToken
-                            )
-                        )
-
-                        accessToken = resource.data.accessToken
-                    }
-                }
-            }
-
-            if (accessToken.isNotBlank()) {
-                response.request.newBuilder()
-                    .header("Authorization", "Bearer ${accessToken}")
-                    .build()
-            } else null
+             newAccessToken.body()?.let {
+                 prefDataSourceUseCase.setAuthData(AuthDataDomain(authData.refreshToken, authData.accessToken))
+                 response.request.newBuilder()
+                     .header("Authorization", "Bearer ${it.accessToken}")
+                     .build()
+             }
         }
     }
-
 }

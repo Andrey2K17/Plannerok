@@ -20,7 +20,6 @@ class SignInFragment : ViewBindingFragment<FragmentSignInBinding>() {
         defaultViewModelProviderFactory
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -34,7 +33,7 @@ class SignInFragment : ViewBindingFragment<FragmentSignInBinding>() {
                 viewModel.sendAuthCode()
             }
 
-            viewLifecycleOwner.launchOnLifecycle {
+            launchOnLifecycle {
                 viewModel.confirmationCodeSentEvent.collect { resource ->
                     when (resource) {
                         is Resource.Error -> {

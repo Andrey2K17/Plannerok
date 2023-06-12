@@ -4,11 +4,13 @@ import com.pg13.data.entities.remote.CheckAuthCodeBody
 import com.pg13.data.entities.remote.CheckAuthCodeRemote
 import com.pg13.data.entities.remote.IsSuccessRemote
 import com.pg13.data.entities.remote.PhoneBody
+import com.pg13.data.entities.remote.ProfileDataRemote
 import com.pg13.data.entities.remote.RefreshTokenBody
 import com.pg13.data.entities.remote.RegisterDataBody
 import com.pg13.data.entities.remote.RegisterDataRemote
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface UserClient {
@@ -32,4 +34,7 @@ interface UserClient {
     suspend fun refreshToken(
         @Body body: RefreshTokenBody
     ): Response<RegisterDataRemote>
+
+    @GET("/api/v1/users/me/")
+    suspend fun getCurrentUser(): Response<ProfileDataRemote>
 }

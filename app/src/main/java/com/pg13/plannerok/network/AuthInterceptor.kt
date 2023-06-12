@@ -1,7 +1,7 @@
 package com.pg13.plannerok.network
 
-import android.util.Log
 import com.pg13.domain.usecases.PrefDataSourceUseCase
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -12,30 +12,19 @@ class AuthInterceptor @Inject constructor(
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
-        val originalResponse = chain.proceed(originalRequest)
-
         val encodedPathSegments = originalRequest.url.encodedPathSegments
 
-        if (!encodedPathSegments.contains("send-auth-code") && !encodedPathSegments.contains("check-auth-code")
-            && !encodedPathSegments.contains("register")
-        ) {
-            var accessToken = ""
-            runBlocking {
-                prefDataSourceUseCase.getAuthData().collect {
-                    accessToken = it.accessToken ?: ""
+        return chain.proceed(
+            chain.request()
+                .newBuilder()
+                .apply {
+                    if (!encodedPathSegments.contains("send-auth-code") && !encodedPathSegments.contains("check-auth-code")
+                        && !encodedPathSegments.contains("register")) {
+                        val accessToken = runBlocking { prefDataSourceUseCase.getAuthData().firstOrNull()?.accessToken }
+                        if (accessToken != null) addHeader("Authorization", "Bearer $accessToken")
+                    }
                 }
-            }
-            val request = chain.request().newBuilder()
-            if (accessToken.isNotEmpty()) {
-                request.addHeader("Authorization", "Bearer $accessToken")
-            }
-            val requestBuild = request.build()
-            Log.d("test123", "addHeader: ${requestBuild.headers}")
-            return chain.proceed(requestBuild)
-        }
-        Log.d("test123", "notAddHeader: ${originalRequest.headers}")
-
-
-        return originalResponse
+                .build()
+        )
     }
 }

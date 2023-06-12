@@ -34,9 +34,9 @@ class RefreshTokenModule {
     @Provides
     fun provideAuthAuthenticator(
         prefDataSourceUseCase: PrefDataSourceUseCase,
-        refreshTokenUseCase: Provider<RefreshTokenUseCase>
+        userClient: Provider<UserClient>
     ): AuthAuthenticator {
-        return AuthAuthenticator(prefDataSourceUseCase, refreshTokenUseCase)
+        return AuthAuthenticator(prefDataSourceUseCase, userClient)
     }
 
     @Singleton
