@@ -58,4 +58,6 @@ ext {
     smsConfirmationView = "com.github.fraggjkee:sms-confirmation-view:1.7.1"
 
     dataStore = "androidx.datastore:datastore:1.0.0"
+
+    refreshLayout = 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

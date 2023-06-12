@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pg13.domain.usecases.ProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
@@ -11,17 +12,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileUseCase: ProfileUseCase,
+    private val profileUseCase: ProfileUseCase
 ) : ViewModel() {
 
-    private val getProfilePressedEvent = MutableSharedFlow<String>()
-    val getProfileEvent = getProfilePressedEvent.flatMapLatest { name ->
-        profileUseCase.getCurrentProfile(name)
+    init {
+        getProfile(true)
     }
 
-    fun getProfile() {
+    private val getProfilePressedEvent = MutableSharedFlow<Boolean>(1)
+    val getProfileEvent = getProfilePressedEvent.flatMapLatest { fromCache ->
+        profileUseCase.getCurrentProfile(fromCache)
+    }
+
+    fun getProfile(fromCache: Boolean) {
         viewModelScope.launch {
-            getProfilePressedEvent.emit("asd")
+            getProfilePressedEvent.emit(fromCache)
+            cancel()
         }
     }
 

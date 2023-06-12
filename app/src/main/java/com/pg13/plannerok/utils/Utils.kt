@@ -20,3 +20,21 @@ inline fun LifecycleOwner.launchOnLifecycle(
 }
 
 fun String.userNameValidation(): Boolean = matches("^[0-9а-яА-Я-a-zA-Z-_]*$".toRegex())
+
+fun getZodiacSign(day: Int, month: Int): String {
+    return when (month) {
+        0 -> if (day < 20) Capricorn else Aquarius
+        1 -> if (day < 20) Aquarius else Pisces
+        2 -> if (day < 20) Pisces else Aries
+        3 -> if (day < 20) Aries else Taurus
+        4 -> if (day < 20) Taurus else Gemini
+        5 -> if (day < 20) Gemini else Cancer
+        6 -> if (day < 20) Cancer else Leo
+        7 -> if (day < 20) Leo else Virgo
+        8 -> if (day < 20) Virgo else Libra
+        9 -> if (day < 20) Libra else Scorpio
+        10 -> if (day < 20) Scorpio else Sagittarius
+        11 -> if (day < 20) Sagittarius else Capricorn
+        else -> "Not found"
+    }
+}

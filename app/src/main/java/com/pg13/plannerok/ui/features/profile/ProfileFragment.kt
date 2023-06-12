@@ -1,12 +1,14 @@
 package com.pg13.plannerok.ui.features.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.pg13.domain.entities.Resource
 import com.pg13.plannerok.R
 import com.pg13.plannerok.databinding.FragmentProfileBinding
+import com.pg13.plannerok.mappers.mapToUI
 import com.pg13.plannerok.ui.base.ViewBindingFragment
 import com.pg13.plannerok.utils.launchOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,25 +25,53 @@ class ProfileFragment : ViewBindingFragment<FragmentProfileBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            sendBtn.setOnClick {
-                viewModel.getProfile()
+            refreshLayout.setOnRefreshListener {
+                viewModel.getProfile(false)
             }
-        }
 
-        launchOnLifecycle {
-            viewModel.getProfileEvent.collect { resource ->
-                when (resource) {
-                    is Resource.Error -> {
-                        Log.d("test123", "error: ${resource.message}")
-                    }
-                    is Resource.Loading -> {
+            editBtn.setOnClick {
+                profile?.let {
+                    findNavController().navigate(
+                        ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment(
+                            it
+                        )
+                    )
+                }
+            }
 
-                    }
-                    is Resource.Success -> {
-                        Log.d("test123", "success resource: ${resource.data}")
+            launchOnLifecycle {
+                viewModel.getProfileEvent.collect { resource ->
+                    when (resource) {
+                        is Resource.Error -> {
+                            refreshLayout.isRefreshing = false
+                            Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT)
+                                .show()
+                        }
+
+                        is Resource.Loading -> {
+                            refreshLayout.isRefreshing = true
+                        }
+
+                        is Resource.Success -> {
+                            refreshLayout.isRefreshing = false
+                            resource.data?.mapToUI()?.let { profile = it } ?: {
+                                viewModel.getProfile(false)
+                            }
+                        }
                     }
                 }
             }
+
+            parentFragmentManager.setFragmentResultListener(
+                "edit_profile_key", this@ProfileFragment
+            ) { _, result ->
+                val loadProfile = result.getBoolean("loadProfile")
+                if (loadProfile) {
+                    viewModel.getProfile(false)
+                }
+            }
         }
+
+
     }
 }

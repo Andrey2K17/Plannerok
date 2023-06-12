@@ -80,6 +80,8 @@ dependencies {
 
     implementation dataStore
 
+    implementation refreshLayout
+
     implementation project(path: ':domain')
     implementation project(path: ':data')
 

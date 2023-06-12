@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="profile"
+            type="com.pg13.plannerok.entities.ProfileUI" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/progress"
+            layout="@layout/layout_progress"
+            tools:visibility="gone" />
+
+        <ScrollView
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phone_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_16dp"
+                    android:hint="@string/phone"
+                    android:paddingHorizontal="@dimen/padding_16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phone_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:paddingHorizontal="@dimen/padding_8dp"
+                        android:singleLine="true"
+                        android:text="@{profile.phone}"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/name_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_16dp"
+                    android:hint="@string/name"
+                    android:paddingHorizontal="@dimen/padding_16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:maxLength="50"
+                        android:paddingHorizontal="@dimen/padding_8dp"
+                        android:singleLine="true"
+                        android:text="@={profile.name}"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/user_name_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_16dp"
+                    android:hint="@string/user_name"
+                    android:paddingHorizontal="@dimen/padding_16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/user_name_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:maxLength="50"
+                        android:paddingHorizontal="@dimen/padding_8dp"
+                        android:singleLine="true"
+                        android:text="@{profile.userName}"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/city_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_16dp"
+                    android:hint="@string/city_hint"
+                    android:paddingHorizontal="@dimen/padding_16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/city_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords"
+                        android:maxLength="50"
+                        android:paddingHorizontal="@dimen/padding_8dp"
+                        android:singleLine="true"
+                        android:text="@={profile.city}"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/birthday_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:hint="@string/birthday_hint"
+                    android:paddingHorizontal="@dimen/padding_16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/birthday_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:paddingHorizontal="@dimen/padding_8dp"
+                        android:text="@={profile.birthday}"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/zodiac_sign_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_16dp"
+                    android:hint="@string/zodiac_sign_hint"
+                    android:paddingHorizontal="@dimen/padding_16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/zodiac_sign_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="none"
+                        android:paddingHorizontal="@dimen/padding_8dp"
+                        android:text="@={profile.zodiacSign}"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/vk_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:hint="@string/vk_hint"
+                    android:paddingHorizontal="@dimen/padding_16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vk_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/padding_8dp"
+                        android:text="@={profile.vk}"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/instagram_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:hint="@string/instagram_hint"
+                    android:paddingHorizontal="@dimen/padding_16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/instagram_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/padding_8dp"
+                        android:text="@={profile.instagram}"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/avatar_til"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:hint="@string/avatar"
+                    android:paddingHorizontal="@dimen/padding_16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/avatar_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="@dimen/padding_8dp"
+                        android:text="@={profile.avatar}"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <com.pg13.plannerok.views.ProgressButton
+            android:id="@+id/send_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:textRes="@{@string/send}" />
+    </LinearLayout>
+</layout>

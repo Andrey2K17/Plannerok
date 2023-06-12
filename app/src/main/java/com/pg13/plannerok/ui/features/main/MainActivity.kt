@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
                 if (it.accessToken?.isEmpty() != false) {
                     navController.navigate(R.id.signInFragment)
                 } else {
+                    navController.popBackStack(R.id.signInFragment, true)
                     navController.navigate(R.id.profileFragment)
                 }
             }

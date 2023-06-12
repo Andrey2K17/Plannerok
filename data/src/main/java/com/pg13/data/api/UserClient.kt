@@ -8,10 +8,13 @@ import com.pg13.data.entities.remote.ProfileDataRemote
 import com.pg13.data.entities.remote.RefreshTokenBody
 import com.pg13.data.entities.remote.RegisterDataBody
 import com.pg13.data.entities.remote.RegisterDataRemote
+import com.pg13.data.entities.remote.UpdateUserBody
+import com.pg13.domain.entities.Avatars
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface UserClient {
 
@@ -37,4 +40,10 @@ interface UserClient {
 
     @GET("/api/v1/users/me/")
     suspend fun getCurrentUser(): Response<ProfileDataRemote>
+
+    @PUT("/api/v1/users/me/")
+    suspend fun updateUser(
+        @Body body: UpdateUserBody
+    ): Response<Avatars>
+
 }

@@ -2,10 +2,28 @@
     <string name="app_name">Plannerok</string>
 
     <string name="send">Отправить</string>
+    <string name="edit">Редактировать</string>
+    <string name="phone" translatable="false">Телефон</string>
     <string name="defaults_action_button">Кнопка действия</string>
     <string name="name">Имя пользователя</string>
     <string name="user_name">username пользователя</string>
+    <string name="avatar">Аватар</string>
 
     <string name="required">Обязательное поле</string>
     <string name="field_special_character">Поле не должно содержать специальные символы, пробелы</string>
+    <string name="about">О себе:</string>
+
+    <string name="city">Город: %s</string>
+    <string name="city_hint">Город</string>
+    <string name="birthday">День рождения: %s</string>
+    <string name="birthday_hint">День рождения</string>
+    <string name="zodiac_sign">Знак зодиака: %s</string>
+    <string name="zodiac_sign_hint">Знак зодиака</string>
+    <string name="vk">VK: %s</string>
+    <string name="vk_hint">VK</string>
+    <string name="instagram">Instagram: %s</string>
+    <string name="instagram_hint">Instagram</string>
+    <string name="created">Дата создания: %s</string>
+    <string name="created_hint">Дата создания</string>
+
 </resources>

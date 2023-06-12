@@ -3,6 +3,7 @@ package com.pg13.plannerok.ui.features.register
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.pg13.domain.entities.Resource
@@ -27,7 +28,7 @@ class RegisterFragment : ViewBindingFragment<FragmentRegisterBinding>() {
         with(binding) {
             phoneEt.setText(args.phone)
             sendBtn.setOnClick {
-                if (checkAllFields()){
+                if (checkAllFields()) {
                     viewModel.phone.value = args.phone
                     viewModel.name.value = nameEt.text.toString()
                     viewModel.userName.value = userNameEt.text.toString()
@@ -40,11 +41,13 @@ class RegisterFragment : ViewBindingFragment<FragmentRegisterBinding>() {
             viewModel.registerEvent.collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
-                        Log.d("test123", "error: ${resource.message}")
+                        Toast.makeText(requireContext(), resource.message, Toast.LENGTH_SHORT).show()
                     }
+
                     is Resource.Loading -> {
 
                     }
+
                     is Resource.Success -> {
                         Log.d("test123", "success: ${resource.data}")
                     }
